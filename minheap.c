@@ -47,7 +47,7 @@ void bubbleUp(MinHeap* heap, int nodeIndex){
  */
 void bubbleDown(MinHeap* heap){
 
-    if(heap == NULL && heap -> size <= 1){
+    if(heap == NULL || heap -> size <= 1){
         return;
     }
 
