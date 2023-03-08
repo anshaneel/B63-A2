@@ -13,6 +13,54 @@
  ** Suggested helper functions
  *************************************************************************/
 
+/* Returns True if 'maybeIdx' is a valid index in minheap 'heap', and 'heap'
+ * stores an element at that index. Returns False otherwise.
+ */
+bool isValidIndex(MinHeap* heap, int maybeIdx){
+    return (maybeIdx >= ROOT_INDEX && maybeIdx <= heap -> size);
+}
+
+/* Returns the index of the left child of a node at index 'nodeIndex' in
+ * minheap 'heap', if such exists.  Returns NOTHING if there is no such left
+ * child.
+ */
+int leftIdx(MinHeap* heap, int nodeIndex){
+    if(isValidIndex(heap, 2 * nodeIndex)){
+        return nodeIndex * 2;
+    }
+    return NOTHING;
+}
+
+/* Returns the index of the right child of a node at index 'nodeIndex' in
+ * minheap 'heap', if such exists.  Returns NOTHING if there is no such right
+ * child.
+ */
+int rightIdx(MinHeap* heap, int nodeIndex){
+    if(isValidIndex(heap, 2 * nodeIndex + 1)){
+        return nodeIndex * 2 + 1;
+    }
+    return NOTHING;
+}
+
+/* Returns the index of the parent of a node at index 'nodeIndex' in minheap
+ * 'heap', if such exists.  Returns NOTHING if there is no such parent.
+ */
+int parentIdx(MinHeap* heap, int nodeIndex){
+    if(isValidIndex(heap, nodeIndex)){
+        return nodeIndex / 2;
+    }
+    return NOTHING;
+}
+
+/* Returns priority of node at index 'nodeIndex' in minheap 'heap'.
+ * Precondition: 'nodeIndex' is a valid index in 'heap'
+ *               'heap' is non-empty
+ */
+int priorityAt(MinHeap* heap, int nodeIndex){
+
+    return heap -> arr[nodeIndex].priority;
+}
+
 /* Swaps contents of heap->arr[index1] and heap->arr[index2] if both 'index1'
  * and 'index2' are valid indices for minheap 'heap'. Has no effect
  * otherwise.
@@ -71,44 +119,6 @@ void bubbleDown(MinHeap* heap){
     }
 }
 
-/* Returns the index of the left child of a node at index 'nodeIndex' in
- * minheap 'heap', if such exists.  Returns NOTHING if there is no such left
- * child.
- */
-int leftIdx(MinHeap* heap, int nodeIndex){
-    if(isValidIndex(heap, 2 * nodeIndex)){
-        return nodeIndex * 2;
-    }
-    return NOTHING;
-}
-/* Returns the index of the right child of a node at index 'nodeIndex' in
- * minheap 'heap', if such exists.  Returns NOTHING if there is no such right
- * child.
- */
-int rightIdx(MinHeap* heap, int nodeIndex){
-    if(isValidIndex(heap, 2 * nodeIndex + 1)){
-        return nodeIndex * 2 + 1;
-    }
-    return NOTHING;
-}
-
-/* Returns the index of the parent of a node at index 'nodeIndex' in minheap
- * 'heap', if such exists.  Returns NOTHING if there is no such parent.
- */
-int parentIdx(MinHeap* heap, int nodeIndex){
-    if(isValidIndex(heap, nodeIndex)){
-        return nodeIndex / 2;
-    }
-    return NOTHING;
-}
-
-/* Returns True if 'maybeIdx' is a valid index in minheap 'heap', and 'heap'
- * stores an element at that index. Returns False otherwise.
- */
-bool isValidIndex(MinHeap* heap, int maybeIdx){
-    return (maybeIdx >= ROOT_INDEX && maybeIdx <= heap -> size);
-}
-
 /* Doubles the capacity of minheap 'heap'.
  */
 void doubleCapacity(MinHeap* heap){
@@ -129,15 +139,6 @@ void doubleCapacity(MinHeap* heap){
     free(heap -> indexMap);
     heap -> arr = newArr;
     heap -> indexMap = newIndexMap;
-}
-
-/* Returns priority of node at index 'nodeIndex' in minheap 'heap'.
- * Precondition: 'nodeIndex' is a valid index in 'heap'
- *               'heap' is non-empty
- */
-int priorityAt(MinHeap* heap, int nodeIndex){
-
-    return heap -> arr[nodeIndex].priority;
 }
 
 /*********************************************************************
